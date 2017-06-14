@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://jreactive/types" 
+  xmlns:tns="http://jreactive/types"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  jaxb:version="2.0"  
+  elementFormDefault="qualified">
+
+    <!-- product -->
+    <xsd:element name="productType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:long" minOccurs="0"/>
+                <xsd:element name="sku" type="tns:sku" />
+                <xsd:element name="name" type="xsd:string" />
+                <xsd:element name="description" type="xsd:string" />
+                <xsd:element name="category" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- an object to contain lists of Products referencing above Product object -->
+    <xsd:element name="productListType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="tns:productType" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="purchaseOrderType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:long" minOccurs="0"/>
+                <xsd:element name="comment" type="xsd:string" />
+                <xsd:element ref="tns:orderItemListType" />
+                <xsd:element name="orderDate" type="xsd:date" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- an object to contain lists of PurchaseOrders referencing above PurchaseOrder object -->
+    <xsd:element name="purchaseOrderListType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="tns:purchaseOrderType" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="orderItemType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:long" minOccurs="0"/>
+                <xsd:element name="quantity">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:positiveInteger">
+                            <xsd:maxExclusive value="100" />
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="itemPrice" type="xsd:decimal" />
+                <xsd:element name="productIdType" type="xsd:long" minOccurs="0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="orderItemListType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="1" maxOccurs="unbounded" ref="tns:orderItemType">
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Stock Keeping Unit, a code for identifying products -->
+    <xsd:simpleType name="sku">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{3}-[A-Z]{2}" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>
