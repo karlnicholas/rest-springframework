@@ -1,4 +1,4 @@
-package jreactive.application;
+package jreactive.controller;
 
 import java.util.Date;
 import java.util.Map;

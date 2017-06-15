@@ -13,12 +13,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import jreactive.application.AppConfig;
+import jreactive.application.WebMvcConfiguration;
 import jreactive.dao.ProductDao;
 import jreactive.model.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={AppConfig.class})
+@ContextConfiguration(classes={WebMvcConfiguration.class})
 @WebAppConfiguration
 public class TestChallengeDaos
 {
