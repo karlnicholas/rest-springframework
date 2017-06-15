@@ -28,8 +28,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	@Transactional
 	public Product save(Product entity) {
-		em.persist(entity);
-		return entity;
+		return em.merge(entity);
 	}
 
 	@Override

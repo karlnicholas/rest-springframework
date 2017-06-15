@@ -2,10 +2,19 @@ package jreactive.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
+import jreactive.model.OrderItem;
 import jreactive.model.PurchaseOrder;
+import jreactive.model.PurchaseOrder_;
 
 /**
  * PurchaseOrderDao Implementation
@@ -21,43 +30,43 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PurchaseOrder update(PurchaseOrder entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.merge(entity);
 	}
 
 	@Override
 	public PurchaseOrder findOne(Long primaryKey) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PurchaseOrder> q = cb.createQuery(PurchaseOrder.class);
+		Root<PurchaseOrder> r = q.from(PurchaseOrder.class);
+		r.fetch(PurchaseOrder_.orderItemList);		
+		return em.createQuery(q.select(r).where(cb.equal(r.get(PurchaseOrder_.id), primaryKey))).getSingleResult();
 	}
 
+	
 	@Override
 	public Iterable<PurchaseOrder> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaQuery<PurchaseOrder> q = em.getCriteriaBuilder().createQuery(PurchaseOrder.class);
+		return em.createQuery(q.select(q.from(PurchaseOrder.class))).getResultList();
 	}
 
 	@Override
 	public Long count() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> q = cb.createQuery(Long.class);
+		return em.createQuery(q.select(cb.count(q.from(PurchaseOrder.class)))).getSingleResult();
 	}
 
 	@Override
 	public void delete(PurchaseOrder entity) {
-		// TODO Auto-generated method stub
-		
+		em.remove(entity);
 	}
 
 	@Override
 	public boolean exists(Long primaryKey) {
-		// TODO Auto-generated method stub
-		return false;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> q = cb.createQuery(Long.class);
+		Root<PurchaseOrder> r = cb.createQuery(PurchaseOrder.class).from(PurchaseOrder.class);
+		Path<Long> id = r.get(PurchaseOrder_.id);
+		return em.createQuery(q.select(cb.count(id)).where(cb.equal(id, primaryKey))).getSingleResult().equals(1L);
 	}
 }

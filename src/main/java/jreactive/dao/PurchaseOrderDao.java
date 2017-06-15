@@ -12,7 +12,6 @@ import jreactive.model.PurchaseOrder;
 public interface PurchaseOrderDao {
  
 	PurchaseOrder save(PurchaseOrder entity); 
-	PurchaseOrder update(PurchaseOrder entity); 
 	PurchaseOrder findOne(Long primaryKey);       
     Iterable<PurchaseOrder> findAll();          
     Long count();                   

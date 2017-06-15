@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class ProductController {
      * @return {@link ProductType}
      */
     @RequestMapping(method=RequestMethod.GET, path="getproduct/{id}", produces="application/json")
-    public ProductType getProduct(@RequestParam("id") Long id) throws Exception {
+    public ProductType getProduct(@PathVariable Long id) throws Exception {
         // retrieve product information based on the id supplied in the formal argument
         Product getProduct = productDao.findOne(id);
         if ( getProduct == null )

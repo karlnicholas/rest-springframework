@@ -52,7 +52,7 @@ public class ServiceConfiguration {
 
 		jpaVendor.setDatabase(Database.HSQL);
 		jpaVendor.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
-		jpaVendor.setShowSql(false);
+		jpaVendor.setShowSql(true);
 
 		return jpaVendor;
 

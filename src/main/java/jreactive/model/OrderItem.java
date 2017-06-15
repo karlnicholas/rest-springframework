@@ -24,7 +24,6 @@ public class OrderItem implements Serializable {
     private int quantity;
     private BigDecimal itemPrice;
     private Long productId;
-    private PurchaseOrder purchaseOrder;
    
     /**
      * Copies properties from @{link OrderItemType}. Copies all dependencies.
@@ -115,13 +114,5 @@ public class OrderItem implements Serializable {
     public void setProductId( Long productId ) {
     	this.productId = productId;
     }
-
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
-	}
-
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
-	}
 
 }

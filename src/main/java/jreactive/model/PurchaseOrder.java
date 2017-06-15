@@ -11,7 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
@@ -32,7 +35,9 @@ public class PurchaseOrder implements Serializable {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    @OneToMany(mappedBy="purchaseOrder")
+    @OneToMany(orphanRemoval=true)
+    @JoinColumn(name="PURCHASEORDERID") // join column is in table for Order
+    @OrderColumn(name="INDEX")
     private List<OrderItem> orderItemList;
     private Date orderDate;
 
@@ -67,14 +72,12 @@ public class PurchaseOrder implements Serializable {
         // do the list of OrderItems
         OrderItemListType orderItemListType = new OrderItemListType();
         // need to deal with lazy initialization issues.
-/*        
-        if ( orderItemList != null && Hibernate.isInitialized(orderItemList) ) {
+        if ( orderItemList != null ) {
             for ( OrderItem orderItem : orderItemList) {
                 OrderItemType orderItemType = orderItem.asOrderItemType();
                 orderItemListType.getOrderItemType().add(orderItemType);
             }
         }
-*/        
         purchaseOrderType.setOrderItemListType(orderItemListType);
         // convert date
         //TODO: sort out date format in xsd

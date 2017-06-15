@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,7 +54,7 @@ public class PurchaseOrderController  {
      * @return {@link PurchaseOrderType}
      */
     @RequestMapping(method=RequestMethod.GET, path="getpurchaseorder/{id}", produces="application/json")
-    public PurchaseOrderType getPurchaseOrder(@RequestParam("id") Long id) throws Exception {
+    public PurchaseOrderType getPurchaseOrder(@PathVariable Long id) throws Exception {
         // retrieve PurchaseOrder information based on the id supplied 
         PurchaseOrder purchaseOrder = purchaseOrderDao.findOne(id);            
         if ( purchaseOrder == null ) throw new IllegalArgumentException("PurchaseOrder not found for id: " + id);
@@ -99,7 +100,7 @@ public class PurchaseOrderController  {
         modifyPurchaseOrder.getOrderItemList().clear();
         modifyPurchaseOrder.fromPurchaseOrderType(purchaseOrderType);     
         // update PurchaseOrder info and return SUCCESS message
-        purchaseOrderDao.update(modifyPurchaseOrder);
+        purchaseOrderDao.save(modifyPurchaseOrder);
         return "SUCCESS";
     }
 
