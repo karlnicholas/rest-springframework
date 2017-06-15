@@ -2,8 +2,8 @@ package jreactive.controller;
 
 import jreactive.types.ProductListType;
 import jreactive.types.ProductType;
+import jreactive.dao.ProductDao;
 import jreactive.model.Product;
-import jreactive.repository.ProductDao;
 
 import java.util.ArrayList;
 import java.util.List;

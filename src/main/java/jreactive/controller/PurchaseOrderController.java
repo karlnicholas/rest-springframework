@@ -2,8 +2,8 @@ package jreactive.controller;
 
 import jreactive.types.PurchaseOrderListType;
 import jreactive.types.PurchaseOrderType;
+import jreactive.dao.PurchaseOrderDao;
 import jreactive.model.PurchaseOrder;
-import jreactive.repository.PurchaseOrderDao;
 
 import java.util.ArrayList;
 import java.util.List;

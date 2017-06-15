@@ -1,13 +1,6 @@
 package jreactive.application;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import jreactive.model.Product;
-import jreactive.repository.ProductDao;
 
 public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override

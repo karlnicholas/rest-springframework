@@ -1,4 +1,4 @@
-package jreactive.repository;
+package jreactive.dao;
 
 import jreactive.model.PurchaseOrder;
 

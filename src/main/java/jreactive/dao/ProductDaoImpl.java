@@ -1,4 +1,4 @@
-package jreactive.repository;
+package jreactive.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

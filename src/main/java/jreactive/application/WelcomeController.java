@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jreactive.dao.ProductDao;
 import jreactive.model.Product;
-import jreactive.repository.ProductDao;
 
 @Controller
 public class WelcomeController {
