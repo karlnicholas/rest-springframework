@@ -19,11 +19,12 @@ import jreactive.types.OrderItemType;
 @Entity
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private int quantity;
     private BigDecimal itemPrice;
     private Long productId;
+    private PurchaseOrder purchaseOrder;
    
     /**
      * Copies properties from @{link OrderItemType}. Copies all dependencies.
@@ -114,5 +115,13 @@ public class OrderItem implements Serializable {
     public void setProductId( Long productId ) {
     	this.productId = productId;
     }
+
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
+	}
+
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
+	}
 
 }

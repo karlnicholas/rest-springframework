@@ -11,10 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
-
-import org.hibernate.Hibernate;
 
 import jreactive.types.OrderItemListType;
 import jreactive.types.OrderItemType;
@@ -30,9 +29,10 @@ import jreactive.types.PurchaseOrderType;
 @Entity
 public class PurchaseOrder implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String comment;
+    @OneToMany(mappedBy="purchaseOrder")
     private List<OrderItem> orderItemList;
     private Date orderDate;
 
@@ -66,13 +66,15 @@ public class PurchaseOrder implements Serializable {
         purchaseOrderType.setComment(comment);
         // do the list of OrderItems
         OrderItemListType orderItemListType = new OrderItemListType();
-        // need to deal with lazy initialization issues.        
+        // need to deal with lazy initialization issues.
+/*        
         if ( orderItemList != null && Hibernate.isInitialized(orderItemList) ) {
             for ( OrderItem orderItem : orderItemList) {
                 OrderItemType orderItemType = orderItem.asOrderItemType();
                 orderItemListType.getOrderItemType().add(orderItemType);
             }
         }
+*/        
         purchaseOrderType.setOrderItemListType(orderItemListType);
         // convert date
         //TODO: sort out date format in xsd

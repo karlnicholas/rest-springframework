@@ -1,20 +1,18 @@
-package jreactive.service;
+package jreactive.controller;
 
 import jreactive.types.ProductListType;
 import jreactive.types.ProductType;
-import jreactive.dao.ProductDao;
 import jreactive.model.Product;
+import jreactive.repository.ProductDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * ProductService Implementation
@@ -23,9 +21,9 @@ import org.springframework.stereotype.Service;
  * @version 2017.04.02
  * 
  */
-@Service
-@Path("/productservice")
-public class ProductServiceImpl implements ProductService {
+
+@RestController
+public class ProductController {
  
     @Autowired
     private ProductDao productDao;
@@ -40,12 +38,10 @@ public class ProductServiceImpl implements ProductService {
      * @param id @{link Long}
      * @return {@link ProductType}
      */
-    @GET
-    @Path("getproduct/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public ProductType getProduct(@PathParam("id") Long id) throws Exception {
+    @RequestMapping(method=RequestMethod.GET, path="getproduct/{id}", produces="application/json")
+    public ProductType getProduct(@RequestParam("id") Long id) throws Exception {
         // retrieve product information based on the id supplied in the formal argument
-        Product getProduct = productDao.getProduct(id);
+        Product getProduct = productDao.findOne(id);
         if ( getProduct == null )
             throw new IllegalArgumentException("Product not found for id: " + id);
         ProductType productType = getProduct.asProductType();
@@ -57,11 +53,11 @@ public class ProductServiceImpl implements ProductService {
      * /rest/productservice/getcatalog
      * @return @{link ProductListType}
      */
-    @GET
-    @Path("getcatalog")
-    @Produces({MediaType.APPLICATION_JSON})
+    @RequestMapping(method=RequestMethod.GET, path="getcatalog", produces="application/json")
     public ProductListType getCatalog() throws Exception {
-        List<Product> listProducts = productDao.getCatalog();
+        List<Product> listProducts = new ArrayList<>();
+        Iterable<Product> pit = productDao.findAll();
+        pit.forEach(listProducts::add);
  
         // create a object of type ProductListType which takes Product objects in its list
         ProductListType productListType = new ProductListType();

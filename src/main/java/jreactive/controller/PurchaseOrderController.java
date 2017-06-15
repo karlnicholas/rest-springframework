@@ -1,32 +1,26 @@
-package jreactive.service;
+package jreactive.controller;
 
 import jreactive.types.PurchaseOrderListType;
 import jreactive.types.PurchaseOrderType;
-import jreactive.dao.PurchaseOrderDao;
 import jreactive.model.PurchaseOrder;
+import jreactive.repository.PurchaseOrderDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * PurchaseOrderService Implementation
  * @author Karl Nicholas
  * @version 2017.04.02
  */
-@Service
-@Path("/purchaseorderservice")
-public class PurchaseOrderServiceImpl implements PurchaseOrderService {
+@RestController
+public class PurchaseOrderController  {
 
     @Autowired
     private PurchaseOrderDao purchaseOrderDao;
@@ -42,12 +36,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      * /rest/purchaseorderservice/getpurchaseorderlist
      * @return {@link PurchaseOrderListType}
      */
-    @GET
-    @Path("getpurchaseorderlist")
-    @Produces({MediaType.APPLICATION_JSON})
+    @RequestMapping(method=RequestMethod.GET, path="getpurchaseorderlist", produces="application/json")
     public PurchaseOrderListType getPurchaseOrderList() throws Exception {
         PurchaseOrderListType purchaseOrderListType = new PurchaseOrderListType();
-        List<PurchaseOrder> listPurchaseOrders = purchaseOrderDao.getPurchaseOrderList();
+        List<PurchaseOrder> listPurchaseOrders = new ArrayList<>(); 
+        purchaseOrderDao.findAll().forEach(listPurchaseOrders::add);
         for(PurchaseOrder purchaseOrder : listPurchaseOrders){
             purchaseOrderListType.getPurchaseOrderType().add( purchaseOrder.asPurchaseOrderType() );
         }
@@ -59,12 +52,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      * /rest/purchaseorderservice/getpurchaseorder/{id}
      * @return {@link PurchaseOrderType}
      */
-    @GET
-    @Path("getpurchaseorder/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public PurchaseOrderType getPurchaseOrder(@PathParam("id") Long id) throws Exception {
+    @RequestMapping(method=RequestMethod.GET, path="getpurchaseorder/{id}", produces="application/json")
+    public PurchaseOrderType getPurchaseOrder(@RequestParam("id") Long id) throws Exception {
         // retrieve PurchaseOrder information based on the id supplied 
-        PurchaseOrder purchaseOrder = purchaseOrderDao.getPurchaseOrder(id);            
+        PurchaseOrder purchaseOrder = purchaseOrderDao.findOne(id);            
         if ( purchaseOrder == null ) throw new IllegalArgumentException("PurchaseOrder not found for id: " + id);
         PurchaseOrderType purchaseOrderType = purchaseOrder.asPurchaseOrderType();
         return purchaseOrderType;
@@ -75,15 +66,18 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      * /rest/purchaseorderservice/addpurchaseorder
      * @return {@link String}
      */
-    @POST
-    @Path("addpurchaseorder")
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces(MediaType.TEXT_PLAIN)
+    @RequestMapping(
+    		method=RequestMethod.POST, 
+    		path="addpurchaseorder", 
+    		consumes="application/json", 
+    		produces="text/pain"
+		)
     public String createPurchaseOrder(PurchaseOrderType purchaseOrderType) throws Exception {
         // PurchaseOrder from PurchaseOrderType 
-        return purchaseOrderDao.insertNewPurchaseOrder(
+        purchaseOrderDao.save(
                 new PurchaseOrder().fromPurchaseOrderType(purchaseOrderType)
             );
+        return "SUCCESS";
     }
  
     /**
@@ -91,19 +85,22 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
      * /rest/purchaseorderservice/updatepurchaseorder
      * @return {@link String}
      */
-    @PUT
-    @Path("updatepurchaseorder")
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces(MediaType.TEXT_PLAIN)
+    @RequestMapping(
+    		method=RequestMethod.PUT, 
+    		path="updatepurchaseorder", 
+    		consumes="application/json", 
+    		produces="text/pain"
+		)
     public String updatePurchaseOrder(PurchaseOrderType purchaseOrderType) throws Exception {        
         // Find PurchaseOrder in the database 
-        PurchaseOrder modifyPurchaseOrder = purchaseOrderDao.getPurchaseOrder(purchaseOrderType.getId());
+        PurchaseOrder modifyPurchaseOrder = purchaseOrderDao.findOne(purchaseOrderType.getId());
         if ( modifyPurchaseOrder == null ) 
             throw new IllegalArgumentException("PurchaseOrder not found for id: " + purchaseOrderType.getId());
         modifyPurchaseOrder.getOrderItemList().clear();
         modifyPurchaseOrder.fromPurchaseOrderType(purchaseOrderType);     
         // update PurchaseOrder info and return SUCCESS message
-        return purchaseOrderDao.updatePurchaseOrder(modifyPurchaseOrder);
+        purchaseOrderDao.update(modifyPurchaseOrder);
+        return "SUCCESS";
     }
 
 }

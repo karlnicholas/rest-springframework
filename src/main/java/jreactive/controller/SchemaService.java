@@ -1,16 +1,10 @@
-package jreactive.service;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
+package jreactive.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,8 +22,8 @@ import jreactive.types.PurchaseOrderType;
  * @version 2017.04.02
  *
  */
-@Service
-@Path("schema")
+@RestController
+@RequestMapping("schema")
 public class SchemaService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -38,9 +32,7 @@ public class SchemaService {
      * /rest/schema/getcatalog
      * @return {@link JsonSchema}
      */
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    @Path("getcatalog")
+    @RequestMapping(method=RequestMethod.GET, path="getcatalog", produces="application/json")
     public JsonSchema getCatalog() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -50,10 +42,7 @@ public class SchemaService {
             return schema;
         } catch (JsonMappingException ex) {
             logger.error(ex.getLocalizedMessage());
-            ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
-            builder.entity(ex.getMessage());
-            Response response = builder.build();
-            throw new WebApplicationException(response);
+            throw new RuntimeException(ex.getLocalizedMessage());
         }
     }
 
@@ -62,9 +51,7 @@ public class SchemaService {
      * /rest/schema/getproduct
      * @return {@link JsonSchema}
      */
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    @Path("getproduct")
+    @RequestMapping(method=RequestMethod.GET, path="getproduct", produces="application/json")
     public JsonSchema getProduct() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -74,10 +61,7 @@ public class SchemaService {
             return schema;
         } catch (JsonMappingException ex) {
             logger.error(ex.getLocalizedMessage());
-            ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
-            builder.entity(ex.getMessage());
-            Response response = builder.build();
-            throw new WebApplicationException(response);
+            throw new RuntimeException(ex.getLocalizedMessage());
         }
     }
     /**
@@ -85,9 +69,7 @@ public class SchemaService {
      * /rest/schema/getpurchaseorder
      * @return {@link JsonSchema}
      */
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    @Path("getpurchaseorder")
+    @RequestMapping(method=RequestMethod.GET, path="getpurchaseorder", produces="application/json")
     public JsonSchema getGetPurchaseOrder() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -97,10 +79,7 @@ public class SchemaService {
             return schema;
         } catch (JsonMappingException ex) {
             logger.error(ex.getLocalizedMessage());
-            ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
-            builder.entity(ex.getMessage());
-            Response response = builder.build();
-            throw new WebApplicationException(response);
+            throw new RuntimeException(ex.getLocalizedMessage());
         }
     }
     /**
@@ -108,9 +87,7 @@ public class SchemaService {
      * /rest/schema/getpurchaseorderlist
      * @return {@link JsonSchema}
      */
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    @Path("getpurchaseorderlist")
+    @RequestMapping(method=RequestMethod.GET, path="getpurchaseorderlist", produces="application/json")
     public JsonSchema getGetPurchaseOrderList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -120,10 +97,7 @@ public class SchemaService {
             return schema;
         } catch (JsonMappingException ex) {
             logger.error(ex.getLocalizedMessage());
-            ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
-            builder.entity(ex.getMessage());
-            Response response = builder.build();
-            throw new WebApplicationException(response);
+            throw new RuntimeException(ex.getLocalizedMessage());
         }
     }
 }
