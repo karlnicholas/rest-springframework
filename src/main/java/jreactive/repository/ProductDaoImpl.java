@@ -2,11 +2,16 @@ package jreactive.repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import jreactive.model.Product;
+import jreactive.model.Product_;
 
 /**
  * ProductDao Implementation
@@ -34,25 +39,29 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public Iterable<Product> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaQuery<Product> q = em.getCriteriaBuilder().createQuery(Product.class);
+		return em.createQuery(q.select(q.from(Product.class))).getResultList();
 	}
 
 	@Override
 	public Long count() {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> q = cb.createQuery(Long.class);		
+		return em.createQuery(q.select(cb.count(q.from(Product.class)))).getSingleResult();
 	}
 
 	@Override
 	public void delete(Product entity) {
-		// TODO Auto-generated method stub
-		
+		em.remove(entity);
 	}
 
 	@Override
 	public boolean exists(Long primaryKey) {
-		return em.createQuery("select count(*) from Product where id = :id", Long.class).setParameter("id", primaryKey).getSingleResult().equals(1L);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> q = cb.createQuery(Long.class);
+		Root<Product> r = q.from(Product.class);
+		Path<Long> id = r.get(Product_.id);
+		return em.createQuery(q.select(cb.count(id)).where(cb.equal(id, primaryKey))).getSingleResult().equals(1L);
 	}    
     
 }
