@@ -15,6 +15,7 @@
         <dbunit.version>2.5.0</dbunit.version>
         <guava.version>21.0</guava.version>
 		<m2eclipse.wtp.contextRoot>/</m2eclipse.wtp.contextRoot>
+		<hibernate.version>5.2.10.Final</hibernate.version>
     </properties>
     <dependencyManagement>
     	<dependencies>
@@ -94,8 +95,7 @@
 		<dependency>
 		   <groupId>org.hibernate</groupId>
 		   <artifactId>hibernate-entitymanager</artifactId>
-		   <version>5.2.10.Final</version>
-		   <scope>compile</scope>
+		   <version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -127,7 +127,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>5.2.10.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>

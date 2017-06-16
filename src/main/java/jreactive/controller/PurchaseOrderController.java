@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,7 +42,7 @@ public class PurchaseOrderController  {
         List<PurchaseOrder> listPurchaseOrders = new ArrayList<>(); 
         purchaseOrderDao.findAll().forEach(listPurchaseOrders::add);
         for(PurchaseOrder purchaseOrder : listPurchaseOrders){
-            purchaseOrderListType.getPurchaseOrderType().add( purchaseOrder.asPurchaseOrderType() );
+            purchaseOrderListType.getPurchaseOrderType().add( purchaseOrder.asPurchaseOrderType(false) );
         }
         return purchaseOrderListType;
     }
@@ -58,7 +57,7 @@ public class PurchaseOrderController  {
         // retrieve PurchaseOrder information based on the id supplied 
         PurchaseOrder purchaseOrder = purchaseOrderDao.findOne(id);            
         if ( purchaseOrder == null ) throw new IllegalArgumentException("PurchaseOrder not found for id: " + id);
-        PurchaseOrderType purchaseOrderType = purchaseOrder.asPurchaseOrderType();
+        PurchaseOrderType purchaseOrderType = purchaseOrder.asPurchaseOrderType(true);
         return purchaseOrderType;
     }
  

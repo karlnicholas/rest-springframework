@@ -1,9 +1,10 @@
 package jreactive.application;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScan({ "jreactive.dao"})
 public class ServiceConfiguration {
-
+/*
 	@Bean
 	public DriverManagerDataSource dataSource() {
 
@@ -28,7 +29,22 @@ public class ServiceConfiguration {
 
 		return dataSource;
 	}
-
+*/
+	
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
+        org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
+        ds.setDriverClassName("org.hsqldb.jdbcDriver");
+        ds.setUrl("jdbc:hsqldb:mem://standalone");
+        ds.setUsername("sa");
+        ds.setPassword("");
+        ds.setInitialSize(5);
+        ds.setMaxActive(10);
+        ds.setMaxIdle(5);
+        ds.setMinIdle(2);
+        return ds;
+    }
+	
 	@Bean
 	public JpaTransactionManager transactionManager() {
 

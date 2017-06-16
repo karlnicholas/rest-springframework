@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -65,14 +64,14 @@ public class PurchaseOrder implements Serializable {
      * @return {@link PurchaseOrderType}
      * @throws DatatypeConfigurationException
      */
-    public PurchaseOrderType asPurchaseOrderType() throws DatatypeConfigurationException {
+    public PurchaseOrderType asPurchaseOrderType(boolean addOrderItemList) throws DatatypeConfigurationException {
         PurchaseOrderType purchaseOrderType = new PurchaseOrderType(); 
         purchaseOrderType.setId(id);
         purchaseOrderType.setComment(comment);
         // do the list of OrderItems
         OrderItemListType orderItemListType = new OrderItemListType();
         // need to deal with lazy initialization issues.
-        if ( orderItemList != null ) {
+        if ( addOrderItemList ) {
             for ( OrderItem orderItem : orderItemList) {
                 OrderItemType orderItemType = orderItem.asOrderItemType();
                 orderItemListType.getOrderItemType().add(orderItemType);

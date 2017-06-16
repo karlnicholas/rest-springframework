@@ -2,17 +2,13 @@ package jreactive.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Fetch;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import jreactive.model.OrderItem;
 import jreactive.model.PurchaseOrder;
 import jreactive.model.PurchaseOrder_;
 
