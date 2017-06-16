@@ -35,8 +35,8 @@ public class PurchaseOrder implements Serializable {
     private Long id;
     private String comment;
     @OneToMany(orphanRemoval=true)
-    @JoinColumn(name="PURCHASEORDERID") // join column is in table for Order
-    @OrderColumn(name="INDEX")
+    @JoinColumn(name="purchaseOrder_id") // join column is in table for Order
+    @OrderColumn(name="index")
     private List<OrderItem> orderItemList;
     private Date orderDate;
 

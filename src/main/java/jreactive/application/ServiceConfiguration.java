@@ -1,5 +1,7 @@
 package jreactive.application;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -69,22 +71,30 @@ public class ServiceConfiguration {
 
 		jpaVendor.setDatabase(Database.HSQL);
 		jpaVendor.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
-//		jpaVendor.setShowSql(true);
-
+		jpaVendor.setShowSql(true);
 		return jpaVendor;
 
 	}
+
+   Properties additionalProperties() {
+	      Properties properties = new Properties();
+	      properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+	      properties.setProperty("hibernate.hbm2ddl.import_files", "/sql/import.sql");
+	      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+	      return properties;
+	   }
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 
-		entityManagerFactory.setPersistenceXmlLocation("classpath:META-INF/persistence.xml");
 		entityManagerFactory.setPersistenceUnitName("persistence");
+		entityManagerFactory.setPackagesToScan("jreactive.model");
 		entityManagerFactory.setDataSource(dataSource());
 		entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
 		entityManagerFactory.setJpaDialect(jpaDialect());
+		entityManagerFactory.setJpaProperties(additionalProperties());
 
 		return entityManagerFactory;
 

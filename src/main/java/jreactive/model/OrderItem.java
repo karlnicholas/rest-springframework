@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import jreactive.model.Product;
 import jreactive.types.OrderItemType;
 
 /**
@@ -23,7 +25,8 @@ public class OrderItem implements Serializable {
     private Long id;
     private int quantity;
     private BigDecimal itemPrice;
-    private Long productId;
+    @ManyToOne
+    private Product product;
    
     /**
      * Copies properties from @{link OrderItemType}. Copies all dependencies.
@@ -34,7 +37,7 @@ public class OrderItem implements Serializable {
         id = orderItemType.getId();
         quantity = orderItemType.getQuantity();
         itemPrice = orderItemType.getItemPrice();
-        productId = orderItemType.getProductIdType();
+        product = new Product().fromProductType(orderItemType.getProductType());
         return this;
     }
     
@@ -47,7 +50,7 @@ public class OrderItem implements Serializable {
         orderItemType.setId(id);
         orderItemType.setQuantity(quantity);
         orderItemType.setItemPrice(itemPrice);
-        orderItemType.setProductIdType( productId );
+        orderItemType.setProductType( product.asProductType() );
         return orderItemType;
     }
 
@@ -107,12 +110,12 @@ public class OrderItem implements Serializable {
         this.itemPrice = value;
     }
     
-    public Long getProductId() {
-    	return productId;
+    public Product getProduct() {
+    	return product;
     }
     
-    public void setProductId( Long productId ) {
-    	this.productId = productId;
+    public void setProduct( Product product ) {
+    	this.product = product;
     }
 
 }

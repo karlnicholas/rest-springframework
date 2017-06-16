@@ -52,16 +52,16 @@
     <xsd:element name="orderItemType">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="id" type="xsd:long" minOccurs="0"/>
-                <xsd:element name="quantity">
-                    <xsd:simpleType>
-                        <xsd:restriction base="xsd:positiveInteger">
-                            <xsd:maxExclusive value="100" />
-                        </xsd:restriction>
-                    </xsd:simpleType>
-                </xsd:element>
+            	<xsd:element name="id" type="xsd:long" minOccurs="0" />
+            	<xsd:element name="quantity">
+            		<xsd:simpleType>
+            			<xsd:restriction base="xsd:positiveInteger">
+            				<xsd:maxExclusive value="100" />
+            			</xsd:restriction>
+            		</xsd:simpleType>
+            	</xsd:element>
                 <xsd:element name="itemPrice" type="xsd:decimal" />
-                <xsd:element name="productIdType" type="xsd:long" minOccurs="0"/>
+                <xsd:element ref="tns:productType" />
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>

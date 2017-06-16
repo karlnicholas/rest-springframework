@@ -4,11 +4,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
+import jreactive.model.OrderItem;
+import jreactive.model.OrderItem_;
 import jreactive.model.PurchaseOrder;
 import jreactive.model.PurchaseOrder_;
 
@@ -34,7 +39,8 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PurchaseOrder> q = cb.createQuery(PurchaseOrder.class);
 		Root<PurchaseOrder> r = q.from(PurchaseOrder.class);
-		r.fetch(PurchaseOrder_.orderItemList);		
+		Fetch<PurchaseOrder, OrderItem> orderItemList = r.fetch(PurchaseOrder_.orderItemList, JoinType.LEFT);
+		orderItemList.fetch(OrderItem_.product, JoinType.LEFT);
 		return em.createQuery(q.select(r).where(cb.equal(r.get(PurchaseOrder_.id), primaryKey))).getSingleResult();
 	}
 
