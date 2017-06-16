@@ -21,7 +21,7 @@ import jreactive.model.Product;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={WebMvcConfiguration.class, ServiceConfiguration.class})
 @WebAppConfiguration
-public class TestChallengeDaos
+public class TestDaos
 {
      
     @Autowired

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Product id="1" sku="111-AA" name="Widget" description="Cool Widget" category="Widget" />
+	<Product id="2" sku="112-AB" name="Widget-2" description="Really Cool Widget" category="Widget" />
+</dataset>

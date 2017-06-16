@@ -1,11 +1,11 @@
 package jreactive.controller;
 
 import java.util.Date;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,18 +21,18 @@ public class WelcomeController {
 	private String message = "Hello World";
 
 	@GetMapping("/")
-	public String welcome(Map<String, Object> model) {
+	public String welcome(Model model) {
 		boolean ex = productDao.exists(1L);
 
-		model.put("time", new Date());
-		model.put("message", this.message);
-		model.put("ex", ex);
+		model.addAttribute("time", new Date());
+		model.addAttribute("message", this.message);
+		model.addAttribute("ex", ex);
 
 		return "welcome";
 	}
 	
 	@RequestMapping("/foo")
-	public String foo(Map<String, Object> model) {
+	public String foo(Model model) {
 		throw new RuntimeException("Foo");
 	}
 

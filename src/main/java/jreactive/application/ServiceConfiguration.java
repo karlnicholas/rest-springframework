@@ -10,6 +10,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -46,7 +47,7 @@ public class ServiceConfiguration {
     }
 	
 	@Bean
-	public JpaTransactionManager transactionManager() {
+	public PlatformTransactionManager transactionManager() {
 
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 
@@ -68,7 +69,7 @@ public class ServiceConfiguration {
 
 		jpaVendor.setDatabase(Database.HSQL);
 		jpaVendor.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
-		jpaVendor.setShowSql(true);
+//		jpaVendor.setShowSql(true);
 
 		return jpaVendor;
 
