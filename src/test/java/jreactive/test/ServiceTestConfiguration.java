@@ -1,14 +1,12 @@
-package jreactive.application;
+package jreactive.test;
 
 import java.util.Properties;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -20,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "jreactive.dao"})
-public class ServiceConfiguration {
+public class ServiceTestConfiguration {
 /*
 	@Bean
 	public DriverManagerDataSource dataSource() {
@@ -35,7 +33,7 @@ public class ServiceConfiguration {
 		return dataSource;
 	}
 */
-/*	
+	
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
@@ -49,7 +47,8 @@ public class ServiceConfiguration {
         ds.setMinIdle(2);
         return ds;
     }
-*/
+
+/*	
     @Bean
     DataSource dataSource() {
         DataSource dataSource = null;
@@ -62,7 +61,7 @@ public class ServiceConfiguration {
         }
         return dataSource;
     }
-	
+*/	
 	@Bean
 	public PlatformTransactionManager transactionManager() {
 
@@ -94,7 +93,7 @@ public class ServiceConfiguration {
    Properties additionalProperties() {
 	      Properties properties = new Properties();
 	      properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-	      properties.setProperty("hibernate.hbm2ddl.import_files", "/sql/import.sql");
+	      properties.setProperty("hibernate.hbm2ddl.import_files", "/sql-test/import.sql");
 	      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 	      return properties;
 	   }

@@ -1,7 +1,11 @@
 package jreactive.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,12 +14,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import jreactive.application.ServiceConfiguration;
 import jreactive.dao.ProductDao;
 import jreactive.model.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ServiceConfiguration.class)
+@ContextConfiguration(classes = ServiceTestConfiguration.class)
 public class ProductDaoTest extends BaseDBUnitSetupTest {
 
 	@Autowired
@@ -35,6 +38,14 @@ public class ProductDaoTest extends BaseDBUnitSetupTest {
 		assertNull(product);
 	}
 
+	@Test
+    public void testGetCatalog()
+    {
+        List<Product> catalog = new ArrayList<>();
+        productDao.findAll().forEach(catalog::add);
+        assertEquals(2, catalog.size());
+    }
+     
 	@Test
 	@Transactional
 	public void testInsert() {

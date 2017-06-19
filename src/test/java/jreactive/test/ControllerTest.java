@@ -22,7 +22,6 @@ import jreactive.dao.PurchaseOrderDao;
 import jreactive.model.OrderItem;
 import jreactive.model.Product;
 import jreactive.model.PurchaseOrder;
-import jreactive.application.ServiceConfiguration;
 import jreactive.application.WebMvcConfiguration;
 import jreactive.controller.ProductController;
 import jreactive.controller.PurchaseOrderController;
@@ -37,7 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ServiceConfiguration.class, WebMvcConfiguration.class} )
+@ContextConfiguration(classes = {ServiceTestConfiguration.class, WebMvcConfiguration.class} )
 @WebAppConfiguration
 public class ControllerTest {
 
