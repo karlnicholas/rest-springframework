@@ -3,6 +3,7 @@ package jreactive.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class OrderItem implements Serializable {
     private Long id;
     private int quantity;
     private BigDecimal itemPrice;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Product product;
    
     /**
