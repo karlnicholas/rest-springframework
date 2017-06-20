@@ -1,7 +1,5 @@
 package jreactive.test;
 
-import java.util.Properties;
-
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -9,15 +7,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
-import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableTransactionManagement
 @ComponentScan({ "jreactive.dao"})
+@EnableTransactionManagement
 public class ServiceTestConfiguration {
 /*
 	@Bean
@@ -33,7 +27,7 @@ public class ServiceTestConfiguration {
 		return dataSource;
 	}
 */
-	
+
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         org.apache.tomcat.jdbc.pool.DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource();
@@ -47,71 +41,18 @@ public class ServiceTestConfiguration {
         ds.setMinIdle(2);
         return ds;
     }
-
-/*	
-    @Bean
-    DataSource dataSource() {
-        DataSource dataSource = null;
-        JndiTemplate jndi = new JndiTemplate();
-        try {
-            dataSource = jndi.lookup("java:comp/env/jdbc/jreactiveDB", DataSource.class);
-        } catch (NamingException e) {
-        	throw new RuntimeException(e);
-//            System.out.pritnln("NamingException for java:comp/env/jdbc/yourname", e);
-        }
-        return dataSource;
-    }
-*/	
 	@Bean
-	public PlatformTransactionManager transactionManager() {
-
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getNativeEntityManagerFactory());
-		transactionManager.setDataSource(dataSource());
-		transactionManager.setJpaDialect(jpaDialect());
-
-		return transactionManager;
+	public JpaTransactionManager jpaTransMan(){
+		JpaTransactionManager jtManager = new JpaTransactionManager(
+				getEntityManagerFactoryBean().getObject());
+		return jtManager;
 	}
-
 	@Bean
-	public HibernateJpaDialect jpaDialect() {
-		return new HibernateJpaDialect();
-	}
-
-	@Bean
-	public HibernateJpaVendorAdapter jpaVendorAdapter() {
-		HibernateJpaVendorAdapter jpaVendor = new HibernateJpaVendorAdapter();
-
-		jpaVendor.setDatabase(Database.HSQL);
-		jpaVendor.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
-		jpaVendor.setShowSql(true);
-		return jpaVendor;
-
-	}
-
-   Properties additionalProperties() {
-	      Properties properties = new Properties();
-	      properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-	      properties.setProperty("hibernate.hbm2ddl.import_files", "/sql-test/import.sql");
-	      properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
-	      return properties;
-	   }
-
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
-		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-
-		entityManagerFactory.setPersistenceUnitName("persistence");
-		entityManagerFactory.setPackagesToScan("jreactive.model");
-		entityManagerFactory.setDataSource(dataSource());
-		entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
-		entityManagerFactory.setJpaDialect(jpaDialect());
-		entityManagerFactory.setJpaProperties(additionalProperties());
-
-		return entityManagerFactory;
-
+	public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
+		LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
+		lcemfb.setDataSource(dataSource());
+		lcemfb.setPersistenceUnitName("localContainerEntity");
+		return lcemfb;
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,7 +73,7 @@ public class PurchaseOrderController  {
     		consumes="application/json", 
     		produces="text/pain"
 		)
-    public String createPurchaseOrder(PurchaseOrderType purchaseOrderType) throws Exception {
+    public String createPurchaseOrder(@RequestBody PurchaseOrderType purchaseOrderType) throws Exception {
         // PurchaseOrder from PurchaseOrderType 
         purchaseOrderDao.save(
                 new PurchaseOrder().fromPurchaseOrderType(purchaseOrderType)
@@ -91,7 +92,7 @@ public class PurchaseOrderController  {
     		consumes="application/json", 
     		produces="text/pain"
 		)
-    public String updatePurchaseOrder(PurchaseOrderType purchaseOrderType) throws Exception {        
+    public String updatePurchaseOrder(@RequestBody PurchaseOrderType purchaseOrderType) throws Exception {        
         // Find PurchaseOrder in the database 
         PurchaseOrder modifyPurchaseOrder = purchaseOrderDao.findOne(purchaseOrderType.getId());
         if ( modifyPurchaseOrder == null ) 

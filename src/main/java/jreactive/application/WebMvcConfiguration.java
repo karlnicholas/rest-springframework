@@ -7,10 +7,11 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
-@ComponentScan("jreactive.controller")
 @EnableWebMvc
+@ComponentScan("jreactive.controller")
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Bean
@@ -18,6 +19,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
         internalResourceViewResolver.setPrefix("/WEB-INF/jsp/");
         internalResourceViewResolver.setSuffix(".jsp");
+        internalResourceViewResolver.setViewClass(JstlView.class);
         return internalResourceViewResolver;
     }
 }

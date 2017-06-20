@@ -19,7 +19,7 @@ import jreactive.model.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceTestConfiguration.class)
-public class ProductDaoTest extends BaseDBUnitSetupTest {
+public class ProductDaoTest {
 
 	@Autowired
 	private ProductDao productDao;
@@ -31,9 +31,9 @@ public class ProductDaoTest extends BaseDBUnitSetupTest {
 		product = productDao.findOne(2L);
 		assertNotNull(product);
 		product = productDao.findOne(3L);
-		assertNull(product);
+		assertNotNull(product);
 		product = productDao.findOne(4L);
-		assertNull(product);
+		assertNotNull(product);
 		product = productDao.findOne(5L);
 		assertNull(product);
 	}
@@ -43,7 +43,7 @@ public class ProductDaoTest extends BaseDBUnitSetupTest {
     {
         List<Product> catalog = new ArrayList<>();
         productDao.findAll().forEach(catalog::add);
-        assertEquals(2, catalog.size());
+        assertEquals(4, catalog.size());
     }
      
 	@Test
