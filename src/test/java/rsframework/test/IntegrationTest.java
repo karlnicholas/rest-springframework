@@ -1,4 +1,4 @@
-package jreactive.test;
+package rsframework.test;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.junit.Assert.*;
@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import jreactive.application.WebMvcConfiguration;
-import jreactive.types.OrderItemType;
-import jreactive.types.PurchaseOrderType;
+import rsframework.application.WebMvcConfiguration;
+import rsframework.types.OrderItemType;
+import rsframework.types.PurchaseOrderType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ServiceTestConfiguration.class, WebMvcConfiguration.class })

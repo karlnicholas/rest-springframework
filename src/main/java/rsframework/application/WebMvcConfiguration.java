@@ -1,4 +1,4 @@
-package jreactive.application;
+package rsframework.application;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("jreactive.controller")
+@ComponentScan("rsframework.controller")
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Bean

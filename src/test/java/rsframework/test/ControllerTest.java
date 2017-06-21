@@ -1,4 +1,4 @@
-package jreactive.test;
+package rsframework.test;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -17,17 +17,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jreactive.dao.ProductDao;
-import jreactive.dao.PurchaseOrderDao;
-import jreactive.model.OrderItem;
-import jreactive.model.Product;
-import jreactive.model.PurchaseOrder;
-import jreactive.application.WebMvcConfiguration;
-import jreactive.controller.ProductController;
-import jreactive.controller.PurchaseOrderController;
-import jreactive.types.OrderItemType;
-import jreactive.types.ProductType;
-import jreactive.types.PurchaseOrderType;
+import rsframework.dao.ProductDao;
+import rsframework.dao.PurchaseOrderDao;
+import rsframework.model.OrderItem;
+import rsframework.model.Product;
+import rsframework.model.PurchaseOrder;
+import rsframework.application.WebMvcConfiguration;
+import rsframework.controller.ProductController;
+import rsframework.controller.PurchaseOrderController;
+import rsframework.types.OrderItemType;
+import rsframework.types.ProductType;
+import rsframework.types.PurchaseOrderType;
 
 import static org.mockito.Mockito.*;
 

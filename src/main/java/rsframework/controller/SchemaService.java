@@ -1,4 +1,4 @@
-package jreactive.controller;
+package rsframework.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 
-import jreactive.types.ProductListType;
-import jreactive.types.ProductType;
-import jreactive.types.PurchaseOrderListType;
-import jreactive.types.PurchaseOrderType;
+import rsframework.types.ProductListType;
+import rsframework.types.ProductType;
+import rsframework.types.PurchaseOrderListType;
+import rsframework.types.PurchaseOrderType;
 
 /**
  * Service to provide JSON schemas for endpoints

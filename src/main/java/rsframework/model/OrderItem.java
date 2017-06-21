@@ -1,4 +1,4 @@
-package jreactive.model;
+package rsframework.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,8 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import jreactive.model.Product;
-import jreactive.types.OrderItemType;
+import rsframework.model.Product;
+import rsframework.types.OrderItemType;
 
 /**
  * OrderItem model object

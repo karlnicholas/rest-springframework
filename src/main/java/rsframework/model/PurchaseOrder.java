@@ -1,5 +1,5 @@
 
-package jreactive.model;
+package rsframework.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import javax.persistence.OrderColumn;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
-import jreactive.types.OrderItemListType;
-import jreactive.types.OrderItemType;
-import jreactive.types.PurchaseOrderType;
+import rsframework.types.OrderItemListType;
+import rsframework.types.OrderItemType;
+import rsframework.types.PurchaseOrderType;
 
 /**
  * PurchaseOrder model object.

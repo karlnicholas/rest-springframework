@@ -1,9 +1,9 @@
-package jreactive.controller;
+package rsframework.controller;
 
-import jreactive.types.ProductListType;
-import jreactive.types.ProductType;
-import jreactive.dao.ProductDao;
-import jreactive.model.Product;
+import rsframework.types.ProductListType;
+import rsframework.types.ProductType;
+import rsframework.dao.ProductDao;
+import rsframework.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;

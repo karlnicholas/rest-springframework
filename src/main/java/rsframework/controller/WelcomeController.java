@@ -1,4 +1,4 @@
-package jreactive.controller;
+package rsframework.controller;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jreactive.dao.ProductDao;
+import rsframework.dao.ProductDao;
 
 @Controller
 public class WelcomeController {

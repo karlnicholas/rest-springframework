@@ -1,4 +1,4 @@
-package jreactive.dao;
+package rsframework.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,8 +10,8 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jreactive.model.Product;
-import jreactive.model.Product_;
+import rsframework.model.Product;
+import rsframework.model.Product_;
 
 /**
  * Product Repository interface - emulates Spring Data

@@ -1,4 +1,4 @@
-package jreactive.test;
+package rsframework.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,8 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import jreactive.dao.ProductDao;
-import jreactive.model.Product;
+import rsframework.dao.ProductDao;
+import rsframework.model.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceTestConfiguration.class)

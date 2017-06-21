@@ -52,7 +52,7 @@
 	<logger name="com.sun.jersey.server.impl.application" level="DEBUG" />
 	
 	<!-- Application logging -->
-	<logger name="jreactive.controller" level="INFO" />
+	<logger name="rsframework.controller" level="INFO" />
 	
 
 	<root level="INFO">

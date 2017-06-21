@@ -1,4 +1,4 @@
-package jreactive.model;
+package rsframework.model;
 
 import java.io.Serializable;
 import java.lang.String;
@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import jreactive.types.ProductType;
+import rsframework.types.ProductType;
 
 /**
  * Entity implementation class for Entity: Product

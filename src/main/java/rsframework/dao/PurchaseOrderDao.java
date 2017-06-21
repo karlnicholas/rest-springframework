@@ -1,4 +1,4 @@
-package jreactive.dao;
+package rsframework.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,10 +12,10 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import jreactive.model.OrderItem;
-import jreactive.model.OrderItem_;
-import jreactive.model.PurchaseOrder;
-import jreactive.model.PurchaseOrder_;
+import rsframework.model.OrderItem;
+import rsframework.model.OrderItem_;
+import rsframework.model.PurchaseOrder;
+import rsframework.model.PurchaseOrder_;
 
 /**
  * PurchaseOrderDao Interface

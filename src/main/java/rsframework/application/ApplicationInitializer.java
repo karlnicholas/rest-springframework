@@ -1,4 +1,4 @@
-package jreactive.application;
+package rsframework.application;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
