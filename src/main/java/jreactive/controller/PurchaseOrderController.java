@@ -1,11 +1,14 @@
 package jreactive.controller;
 
+import jreactive.types.OrderItemType;
 import jreactive.types.PurchaseOrderListType;
 import jreactive.types.PurchaseOrderType;
 import jreactive.dao.PurchaseOrderDao;
+import jreactive.model.OrderItem;
 import jreactive.model.PurchaseOrder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +100,27 @@ public class PurchaseOrderController  {
         PurchaseOrder modifyPurchaseOrder = purchaseOrderDao.findOne(purchaseOrderType.getId());
         if ( modifyPurchaseOrder == null ) 
             throw new IllegalArgumentException("PurchaseOrder not found for id: " + purchaseOrderType.getId());
-        modifyPurchaseOrder.getOrderItemList().clear();
+//      modifyPurchaseOrder.getOrderItemList().clear();
+        if ( modifyPurchaseOrder.getOrderItemList() != null ) {
+        	Iterator<OrderItem> oiit = modifyPurchaseOrder.getOrderItemList().iterator();
+        	while( oiit.hasNext() ) {
+        		OrderItem orderItem = oiit.next();
+            	boolean notfound = true;
+            	int index = -1;
+                for ( OrderItemType orderItemType : purchaseOrderType.getOrderItemListType().getOrderItemType() ) {
+                	if ( orderItem.getId().equals(orderItemType.getId()) ) {
+                		notfound = false;
+                		index = purchaseOrderType.getOrderItemListType().getOrderItemType().indexOf(orderItemType);
+                		break;
+                	}
+                }
+                if ( notfound ) {
+                	oiit.remove();
+                } else {
+                	purchaseOrderType.getOrderItemListType().getOrderItemType().remove(index);
+                }
+            }
+        }
         modifyPurchaseOrder.fromPurchaseOrderType(purchaseOrderType);     
         // update PurchaseOrder info and return SUCCESS message
         purchaseOrderDao.save(modifyPurchaseOrder);

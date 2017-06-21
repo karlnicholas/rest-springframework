@@ -26,7 +26,7 @@ public class OrderItem implements Serializable {
     private Long id;
     private int quantity;
     private BigDecimal itemPrice;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.REFRESH)
     private Product product;
    
     /**
