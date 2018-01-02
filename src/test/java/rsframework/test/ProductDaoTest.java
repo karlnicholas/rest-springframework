@@ -14,27 +14,27 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import rsframework.dao.ProductDao;
 import rsframework.model.Product;
+import rsframework.repo.ProductRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceTestConfiguration.class)
 public class ProductDaoTest {
 
 	@Autowired
-	private ProductDao productDao;
+	private ProductRepository productRepository;
 
 	@Test
 	public void testFind() {
-		Product product = productDao.findOne(1L);
+		Product product = productRepository.findOne(1L);
 		assertNotNull(product);
-		product = productDao.findOne(2L);
+		product = productRepository.findOne(2L);
 		assertNotNull(product);
-		product = productDao.findOne(3L);
+		product = productRepository.findOne(3L);
 		assertNotNull(product);
-		product = productDao.findOne(4L);
+		product = productRepository.findOne(4L);
 		assertNotNull(product);
-		product = productDao.findOne(5L);
+		product = productRepository.findOne(5L);
 		assertNull(product);
 	}
 
@@ -42,7 +42,7 @@ public class ProductDaoTest {
     public void testGetCatalog()
     {
         List<Product> catalog = new ArrayList<>();
-        productDao.findAll().forEach(catalog::add);
+        productRepository.findAll().forEach(catalog::add);
         assertEquals(4, catalog.size());
     }
      
@@ -57,23 +57,23 @@ public class ProductDaoTest {
 		product.setSku("44657688");
 		product.setCategory("F");
 
-		productDao.save(product);
+		productRepository.save(product);
 	}
 
 	@Test
 	@Transactional
 	public void testUpdate() {
 
-		Product product = productDao.findOne(1L);
+		Product product = productRepository.findOne(1L);
 		product.setSku("44657688");
-		productDao.save(product);
+		productRepository.save(product);
 	}
 
 	@Test
 	@Transactional
 	public void testRemove() {
-		Product product = productDao.findOne(1L);
-		productDao.delete(product);
+		Product product = productRepository.findOne(1L);
+		productRepository.delete(product);
 	}
 
 }

@@ -2,8 +2,8 @@ package rsframework.controller;
 
 import rsframework.types.ProductListType;
 import rsframework.types.ProductType;
-import rsframework.dao.ProductDao;
 import rsframework.model.Product;
+import rsframework.repo.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
  
     @Autowired
-    private ProductDao productDao;
+    private ProductRepository productRepository;
 
-    public void setProductDao(ProductDao productDao) {
-        this.productDao = productDao;
+    public void setProductDao(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     /**
@@ -41,7 +41,7 @@ public class ProductController {
     @RequestMapping(method=RequestMethod.GET, path="getproduct/{id}", produces="application/json")
     public ProductType getProduct(@PathVariable Long id) throws Exception {
         // retrieve product information based on the id supplied in the formal argument
-        Product getProduct = productDao.findOne(id);
+        Product getProduct = productRepository.findOne(id);
         if ( getProduct == null )
             throw new IllegalArgumentException("Product not found for id: " + id);
         ProductType productType = getProduct.asProductType();
@@ -56,7 +56,7 @@ public class ProductController {
     @RequestMapping(method=RequestMethod.GET, path="getcatalog", produces="application/json")
     public ProductListType getCatalog() throws Exception {
         List<Product> listProducts = new ArrayList<>();
-        Iterable<Product> pit = productDao.findAll();
+        Iterable<Product> pit = productRepository.findAll();
         pit.forEach(listProducts::add);
  
         // create a object of type ProductListType which takes Product objects in its list

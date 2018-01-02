@@ -17,11 +17,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import rsframework.dao.ProductDao;
-import rsframework.dao.PurchaseOrderDao;
 import rsframework.model.OrderItem;
 import rsframework.model.Product;
 import rsframework.model.PurchaseOrder;
+import rsframework.repo.ProductRepository;
+import rsframework.repo.PurchaseOrderRepository;
 import rsframework.application.WebMvcConfiguration;
 import rsframework.controller.ProductController;
 import rsframework.controller.PurchaseOrderController;
@@ -41,9 +41,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class ControllerTest {
 
     @Mock
-    private ProductDao productDao;
+    private ProductRepository productRepository;
     @Mock
-    private PurchaseOrderDao purchaseOrderDao;
+    private PurchaseOrderRepository purchaseOrderRepository;
 
     @Autowired
     private ProductController productController;
@@ -60,8 +60,8 @@ public class ControllerTest {
     @Before
     public void setupMock() {
         MockitoAnnotations.initMocks(this);
-        productController.setProductDao(productDao);
-        purchaseOrderController.setPurchaseOrderDao(purchaseOrderDao);
+        productController.setProductDao(productRepository);
+        purchaseOrderController.setPurchaseOrderDao(purchaseOrderRepository);
 
         product = new Product();
         product.setId(1L);
@@ -111,15 +111,15 @@ public class ControllerTest {
         List<Product> productList = new ArrayList<>();
         productList.add(product);
 
-        when(productDao.findOne(1L)).thenReturn(product);
+        when(productRepository.findOne(1L)).thenReturn(product);
         productController.getProduct(1L);
-        verify(productDao).findOne(1L);
-        verifyZeroInteractions(productDao);
+        verify(productRepository).findOne(1L);
+        verifyZeroInteractions(productRepository);
 
-        when(productDao.findAll()).thenReturn(productList);
+        when(productRepository.findAll()).thenReturn(productList);
         productController.getCatalog();
-        verify(productDao).findAll();
-        verifyZeroInteractions(productDao);
+        verify(productRepository).findAll();
+        verifyZeroInteractions(productRepository);
     }
 
     @Test
@@ -129,15 +129,15 @@ public class ControllerTest {
         List<PurchaseOrder> purchaseOrderList = new ArrayList<>();
         purchaseOrderList.add(purchaseOrder);
 
-        when(purchaseOrderDao.findOne(1L)).thenReturn(purchaseOrder);
+        when(purchaseOrderRepository.findOne(1L)).thenReturn(purchaseOrder);
         purchaseOrderController.getPurchaseOrder(1L);
-        verify(purchaseOrderDao).findOne(1L);
-        verifyNoMoreInteractions(purchaseOrderDao);
+        verify(purchaseOrderRepository).findOne(1L);
+        verifyNoMoreInteractions(purchaseOrderRepository);
 
-        when(purchaseOrderDao.findAll()).thenReturn(purchaseOrderList);
+        when(purchaseOrderRepository.findAll()).thenReturn(purchaseOrderList);
         purchaseOrderController.getPurchaseOrderList();
-        verify(purchaseOrderDao).findAll();
-        verifyNoMoreInteractions(purchaseOrderDao);
+        verify(purchaseOrderRepository).findAll();
+        verifyNoMoreInteractions(purchaseOrderRepository);
 
         // need to test create and update with rest
         // create the services create new objects 

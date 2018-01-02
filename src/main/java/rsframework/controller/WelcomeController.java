@@ -9,20 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import rsframework.dao.ProductDao;
+import rsframework.repo.ProductRepository;
 
 @Controller
 public class WelcomeController {
 
 	@Autowired
-	ProductDao productDao;
+	ProductRepository productRepository;
 
 	@Value("${application.message:Hello World}")
 	private String message = "Hello World";
 
 	@GetMapping("/")
 	public String welcome(Model model) {
-		boolean ex = productDao.exists(1L);
+		boolean ex = productRepository.exists(1L);
 
 		model.addAttribute("time", new Date());
 		model.addAttribute("message", this.message);

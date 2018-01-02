@@ -1,4 +1,4 @@
-package rsframework.dao;
+package rsframework.repo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,7 +26,7 @@ import rsframework.model.PurchaseOrder_;
  */
 @Repository
 @Transactional(readOnly=false)
-public class PurchaseOrderDao {
+public class PurchaseOrderRepository {
     @PersistenceContext
     private EntityManager em;
 

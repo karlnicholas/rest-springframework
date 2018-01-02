@@ -3,9 +3,9 @@ package rsframework.controller;
 import rsframework.types.OrderItemType;
 import rsframework.types.PurchaseOrderListType;
 import rsframework.types.PurchaseOrderType;
-import rsframework.dao.PurchaseOrderDao;
 import rsframework.model.OrderItem;
 import rsframework.model.PurchaseOrder;
+import rsframework.repo.PurchaseOrderRepository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class PurchaseOrderController  {
 
     @Autowired
-    private PurchaseOrderDao purchaseOrderDao;
+    private PurchaseOrderRepository purchaseOrderRepository;
  
-    public void setPurchaseOrderDao(PurchaseOrderDao purchaseOrderDao) {
-        this.purchaseOrderDao = purchaseOrderDao;
+    public void setPurchaseOrderDao(PurchaseOrderRepository purchaseOrderRepository) {
+        this.purchaseOrderRepository = purchaseOrderRepository;
     }
 
     // Basic operations for PurchaseOrder Service
@@ -44,7 +44,7 @@ public class PurchaseOrderController  {
     public PurchaseOrderListType getPurchaseOrderList() throws Exception {
         PurchaseOrderListType purchaseOrderListType = new PurchaseOrderListType();
         List<PurchaseOrder> listPurchaseOrders = new ArrayList<>(); 
-        purchaseOrderDao.findAll().forEach(listPurchaseOrders::add);
+        purchaseOrderRepository.findAll().forEach(listPurchaseOrders::add);
         for(PurchaseOrder purchaseOrder : listPurchaseOrders){
             purchaseOrderListType.getPurchaseOrderType().add( purchaseOrder.asPurchaseOrderType(false) );
         }
@@ -59,7 +59,7 @@ public class PurchaseOrderController  {
     @RequestMapping(method=RequestMethod.GET, path="getpurchaseorder/{id}", produces="application/json")
     public PurchaseOrderType getPurchaseOrder(@PathVariable Long id) throws Exception {
         // retrieve PurchaseOrder information based on the id supplied 
-        PurchaseOrder purchaseOrder = purchaseOrderDao.findOne(id);            
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findOne(id);            
         if ( purchaseOrder == null ) throw new IllegalArgumentException("PurchaseOrder not found for id: " + id);
         PurchaseOrderType purchaseOrderType = purchaseOrder.asPurchaseOrderType(true);
         return purchaseOrderType;
@@ -78,7 +78,7 @@ public class PurchaseOrderController  {
 		)
     public String createPurchaseOrder(@RequestBody PurchaseOrderType purchaseOrderType) throws Exception {
         // PurchaseOrder from PurchaseOrderType 
-        purchaseOrderDao.save(
+        purchaseOrderRepository.save(
                 new PurchaseOrder().fromPurchaseOrderType(purchaseOrderType)
             );
         return "SUCCESS";
@@ -97,7 +97,7 @@ public class PurchaseOrderController  {
 		)
     public String updatePurchaseOrder(@RequestBody PurchaseOrderType purchaseOrderType) throws Exception {        
         // Find PurchaseOrder in the database 
-        PurchaseOrder modifyPurchaseOrder = purchaseOrderDao.findOne(purchaseOrderType.getId());
+        PurchaseOrder modifyPurchaseOrder = purchaseOrderRepository.findOne(purchaseOrderType.getId());
         if ( modifyPurchaseOrder == null ) 
             throw new IllegalArgumentException("PurchaseOrder not found for id: " + purchaseOrderType.getId());
 //      modifyPurchaseOrder.getOrderItemList().clear();
@@ -123,7 +123,7 @@ public class PurchaseOrderController  {
         }
         modifyPurchaseOrder.fromPurchaseOrderType(purchaseOrderType);     
         // update PurchaseOrder info and return SUCCESS message
-        purchaseOrderDao.save(modifyPurchaseOrder);
+        purchaseOrderRepository.save(modifyPurchaseOrder);
         return "SUCCESS";
     }
 
